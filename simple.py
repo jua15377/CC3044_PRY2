@@ -164,8 +164,9 @@ zoom_speed = 1
 view_vec = glm.vec3(0, 5, 0)
 radio = camera.z
 rotation = 0
+y_move = False
 def process_input():
-    global rotation, radio, continuos_ligth
+    global rotation, radio, continuos_ligth, y_move
     # print('radio', radio)
     # print(camera.z)
     for event in pygame.event.get():
@@ -195,8 +196,19 @@ def process_input():
             #for light
             if event.key == pygame.K_l:
                 continuos_ligth = not continuos_ligth
-            
-
+            if event.key == pygame.K_y:
+                y_move = not y_move
+            # move on y axis
+            if event.key == pygame.K_UP and y_move:
+                camera.y += camera_speed
+                view_vec.y += camera_speed
+                if camera.y >= 16:
+                    camera.y = 16
+            if event.key == pygame.K_DOWN and y_move:
+                camera.y -= camera_speed
+                view_vec.y -= camera_speed
+                if camera.y <= -2:
+                    camera.y = -2
     # print(camera.x, camera.y,  camera.z,)
     return False
 
